@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning · Interactive</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <button id="sidebar-toggle" aria-label="Toggle sidebar">&#9776;</button>
+        <aside id="sidebar">
+            <div id="sidebar-header">
+                <h1>Machine Learning</h1>
+                <p class="author">Bishop / Murphy / Hastie, Tibshirani &amp; Friedman</p>
+                <div id="progress-container">
+                    <div id="progress-bar"><div id="progress-fill"></div></div>
+                    <span id="progress-text">0%</span>
+                </div>
+            </div>
+            <div id="search-container">
+                <input type="text" id="search-input" placeholder="Search topics...">
+            </div>
+            <nav id="chapter-nav"></nav>
+            <div id="sidebar-footer"><p class="copyright-notice" style="font-size:0.7rem;color:#888;margin-top:12px;text-align:center;">&copy; 2026 Hengzhe Zhao · AGPL-3.0 &amp; Commercial</p>
+                <button id="reset-progress">Reset Progress</button>
+            </div>
+        </aside>
+        <main id="main-content">
+            <div id="welcome-screen">
+                <div class="welcome-hero">
+                    <h1>Machine Learning</h1>
+                    <h2>From Linear Regression to Ensemble Methods and Graphical Models</h2>
+                    <p class="welcome-description">
+                        A rigorous, interactive journey through the foundations of machine learning.
+                        Every algorithm visualized, every theorem proved, every concept made tangible.
+                    </p>
+                </div>
+                <div class="roadmap">
+                    <h3>Course Roadmap</h3>
+                    <div class="roadmap-parts">
+                        <div class="roadmap-part">
+                            <h4>Part A: Foundations</h4>
+                            <ul>
+                                <li>Ch 0: Introduction &amp; Learning Paradigms</li>
+                                <li>Ch 1: Probability &amp; Statistical Decision Theory</li>
+                                <li>Ch 2: Linear Regression</li>
+                                <li>Ch 3: Bias-Variance &amp; Model Selection</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part B: Classification</h4>
+                            <ul>
+                                <li>Ch 4: Linear Classification</li>
+                                <li>Ch 5: Logistic Regression</li>
+                                <li>Ch 6: Generative Classifiers</li>
+                                <li>Ch 7: Support Vector Machines</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part C: Kernel Methods &amp; Nonlinear Models</h4>
+                            <ul>
+                                <li>Ch 8: Kernel Methods</li>
+                                <li>Ch 9: Decision Trees</li>
+                                <li>Ch 10: Ensemble Methods</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part D: Unsupervised Learning</h4>
+                            <ul>
+                                <li>Ch 11: K-Means &amp; Clustering</li>
+                                <li>Ch 12: Principal Component Analysis</li>
+                                <li>Ch 13: Expectation-Maximization</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part E: Bayesian Methods</h4>
+                            <ul>
+                                <li>Ch 14: Bayesian Linear Regression</li>
+                                <li>Ch 15: Gaussian Processes</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part F: Graphical Models &amp; Advanced Topics</h4>
+                            <ul>
+                                <li>Ch 16: Graphical Models</li>
+                                <li>Ch 17: Sampling &amp; MCMC</li>
+                                <li>Ch 18: Variational Inference</li>
+                                <li>Ch 19: Reinforcement Learning Basics</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p class="welcome-start">Select a chapter from the sidebar to begin.</p>
+            </div>
+            <div id="chapter-content" style="display:none;">
+                <div id="chapter-header">
+                    <div id="chapter-number-badge"></div>
+                    <h1 id="chapter-title"></h1>
+                    <p id="chapter-subtitle"></p>
+                </div>
+                <div id="section-tabs"></div>
+                <article id="section-content"></article>
+                <div id="exercises-panel" style="display:none;">
+                    <h3>Exercises</h3>
+                    <div id="exercises-list"></div>
+                </div>
+                <div id="chapter-nav-buttons">
+                    <button id="prev-btn" disabled>&larr; Previous</button>
+                    <span id="section-indicator"></span>
+                    <button id="next-btn">Next &rarr;</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script src="viz-engine.js"></script>
+
+    <script>
+    window.CHAPTER_MANIFEST = [
+        {number:0,  id:'ch00', title:'Introduction & Learning Paradigms',    file:'ch00-introduction'},
+        {number:1,  id:'ch01', title:'Probability & Statistical Decision Theory', file:'ch01-probability-decisions'},
+        {number:2,  id:'ch02', title:'Linear Regression',                   file:'ch02-linear-regression'},
+        {number:3,  id:'ch03', title:'Bias-Variance & Model Selection',     file:'ch03-bias-variance'},
+        {number:4,  id:'ch04', title:'Linear Classification',               file:'ch04-linear-classification'},
+        {number:5,  id:'ch05', title:'Logistic Regression',                 file:'ch05-logistic-regression'},
+        {number:6,  id:'ch06', title:'Generative Classifiers',              file:'ch06-generative-classifiers'},
+        {number:7,  id:'ch07', title:'Support Vector Machines',             file:'ch07-svm'},
+        {number:8,  id:'ch08', title:'Kernel Methods',                      file:'ch08-kernel-methods'},
+        {number:9,  id:'ch09', title:'Decision Trees',                      file:'ch09-decision-trees'},
+        {number:10, id:'ch10', title:'Ensemble Methods',                    file:'ch10-ensemble-methods'},
+        {number:11, id:'ch11', title:'K-Means & Clustering',                file:'ch11-clustering'},
+        {number:12, id:'ch12', title:'Principal Component Analysis',        file:'ch12-pca'},
+        {number:13, id:'ch13', title:'Expectation-Maximization',            file:'ch13-em'},
+        {number:14, id:'ch14', title:'Bayesian Linear Regression',          file:'ch14-bayesian-regression'},
+        {number:15, id:'ch15', title:'Gaussian Processes',                  file:'ch15-gaussian-processes'},
+        {number:16, id:'ch16', title:'Graphical Models',                    file:'ch16-graphical-models'},
+        {number:17, id:'ch17', title:'Sampling & MCMC',                     file:'ch17-mcmc'},
+        {number:18, id:'ch18', title:'Variational Inference',               file:'ch18-variational-inference'},
+        {number:19, id:'ch19', title:'Reinforcement Learning Basics',       file:'ch19-reinforcement-learning'}
+    ];
+    </script>
+
+    <script src="app.js"></script>
+</body>
+</html>
